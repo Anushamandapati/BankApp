@@ -21,26 +21,25 @@ import com.capgemini.bankapp.service.impl.CustomerServiceImpl;
 public class LoginController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private CustomerService customerService;
+    private CustomerService customerService;
 	private Customer customer;
 	private ServletContext context;
 
-    public LoginController() 
-    {
+    public LoginController() {
         super();
         customerService = new CustomerServiceImpl();
+        // TODO Auto-generated constructor stub
     }
     
     @Override
-    public void init(ServletConfig config) throws ServletException
-    {
+    public void init(ServletConfig config) throws ServletException {
+    	// TODO Auto-generated method stub
     	context=config.getServletContext();
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		response.setContentType("text/html");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		String customerId = request.getParameter("customerId");
 		String password = request.getParameter("password");
 		
@@ -56,17 +55,19 @@ public class LoginController extends HttpServlet
 		RequestDispatcher dispatcher;
 		if((customer=customerService.authenticate(customer))!=null)
 		{
-			session.setAttribute("customer", customer);
-			context.setAttribute("customerService", customerService);
-			dispatcher = request.getRequestDispatcher("displayDetails.jsp");
-
+		session.setAttribute("customer",customerService.authenticate(customer));
+		context.setAttribute("customerService", customerService);
+		dispatcher = request.getRequestDispatcher("dispalyDetails.jsp");
 		}
 		else
 		{
-			dispatcher = request.getRequestDispatcher("userDoesnotExist.jsp");
+			dispatcher = request.getRequestDispatcher("userDoesNotExist.jsp");
 		}
 		dispatcher.forward(request, response);
+
+		
 	}
+
 }
 
 
